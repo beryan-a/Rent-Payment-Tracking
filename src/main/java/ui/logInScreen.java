@@ -9,8 +9,16 @@ package ui;
  * @author integ
  * 
  */
+import DAO.UserDAO;
 import javax.swing.JOptionPane;
 import model.User;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 
 public class logInScreen extends javax.swing.JFrame {
     
@@ -19,9 +27,20 @@ public class logInScreen extends javax.swing.JFrame {
     /**
      * Creates new form logInScreen
      */
+    private User user;
+    
     public logInScreen() {
         initComponents();
-        User u1 = new User("bryn_a", "pass123");
+        
+        //
+        /*UserDAO dao = new UserDAO();
+
+        User user = dao.login("bryn_a", "pass123");
+
+        if(user != null){
+            System.out.println(user.getUsername());
+            System.out.println(user.getRole());
+        }*/
         
     }
     /**
@@ -39,9 +58,9 @@ public class logInScreen extends javax.swing.JFrame {
         txtUsername = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         loginBtn = new javax.swing.JButton();
+        signupBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(791, 497));
 
         jLabel1.setText("Password:");
 
@@ -50,10 +69,17 @@ public class logInScreen extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel3.setText("RENT PAYMENT TRACKING SYSTEM");
 
-        loginBtn.setText("Log in");
+        loginBtn.setText("Log In");
         loginBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 loginBtnActionPerformed(evt);
+            }
+        });
+
+        signupBtn.setText("Sign Up");
+        signupBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                signupBtnActionPerformed(evt);
             }
         });
 
@@ -62,60 +88,93 @@ public class logInScreen extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(116, 116, 116)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(183, 183, 183)
+                        .addComponent(jLabel3))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(239, 239, 239)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 63, Short.MAX_VALUE)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txtUsername)
-                            .addComponent(fieldPassword, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE))
-                        .addGap(101, 101, 101)
-                        .addComponent(loginBtn)))
+                            .addComponent(fieldPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(199, 199, 199)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(signupBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 346, Short.MAX_VALUE)
+                            .addComponent(loginBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(202, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(97, Short.MAX_VALUE)
+                .addContainerGap(77, Short.MAX_VALUE)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(81, 81, 81)
+                .addGap(32, 32, 32)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(42, 42, 42)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(fieldPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(loginBtn))
-                .addGap(176, 176, 176))
+                    .addComponent(fieldPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(40, 40, 40)
+                .addComponent(loginBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(signupBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(98, 98, 98))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
     private void loginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBtnActionPerformed
         // TODO add your handling code here:
-        try{
-            String userName = txtUsername.getText();
+        try {
+            String username = txtUsername.getText();
             String password = fieldPassword.getText();
-            if(userName.isEmpty()||password.isEmpty() ){
+            // boş alan kontrolü
+            if(username.isEmpty() || password.isEmpty()){
                 JOptionPane.showMessageDialog(this,"Please fill all required fields!");
+                return;
             }
-            if(userName.equals("bryn_a")&&password.equals("pass123")){
-                new MainMenu().setVisible(true);
-                this.setVisible(false);
-            }else if(!(userName.equals("bryn_a"))||!(password.equals("pass123"))){
-                JOptionPane.showMessageDialog(this,"Invalid username or password. Please Try again!");
+            // DAO object
+            UserDAO dao = new UserDAO();
+            // login kontrol
+            //User user = dao.login(username, password);
+            user = dao.login(username, password);
+            // kullanıcı bulunduysa
+            if(user != null){
+                JOptionPane.showMessageDialog(this,"Login successful!");
+                // ROLE CONTROL
+                if(user.getRole().equals("admin")){
+                    new AdminMainMenu(user).setVisible(true);
+                }else if(user.getRole().equals("tenant")){
+                    JOptionPane.showMessageDialog(this,"Tenant panel will open." );
+
+                        // ileride:
+                        // new TenantMenu(user).setVisible(true);
+                }
+                this.dispose();
+
+            }else{
+                JOptionPane.showMessageDialog(this,"Invalid username or password!");
             }
+
         }catch(Exception e){
-            JOptionPane.showMessageDialog(this, "Something wrong happend. Please Try again!"+ e.getMessage());
-            
+            JOptionPane.showMessageDialog(this,e.getMessage());
         }
+
     }//GEN-LAST:event_loginBtnActionPerformed
+
+    private void signupBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signupBtnActionPerformed
+        // TODO add your handling code here:
+        new signUpScreen().setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_signupBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -148,6 +207,12 @@ public class logInScreen extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JButton loginBtn;
+    private javax.swing.JButton signupBtn;
     private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables
+    
+    User getUser(){
+        return user;
+    }
+    
 }

@@ -8,16 +8,18 @@ package model;
  *
  * @author integ
  */
-public class OnTimePayment extends Payment{
+public class OnTimePayment extends Payment {
 
-    public OnTimePayment(int aptNo, double amount, int month, int year) {
-        super(aptNo, amount, month, year);
+    public OnTimePayment(int paymentId, int tenantId,
+                         double amount, String paymentDate,
+                         String paymentType, int lateDays) {
+
+        super(paymentId, tenantId, amount,
+              paymentDate, paymentType, lateDays);
     }
-    //constructor
-    
+
     @Override
-    public double calculateAmount(){
-        return amount;
+    public double calculateAmount() {
+        return getAmount();
     }
-    
 }

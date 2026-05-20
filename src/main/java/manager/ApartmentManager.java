@@ -36,7 +36,7 @@ public class ApartmentManager {
     }
     
     // functions
-    public double calculateDebt(Tenant t){
+    /*public double calculateDebt(Tenant t){
         double totalPaid=0;
         
         for(Payment p: payments){
@@ -75,5 +75,5 @@ public class ApartmentManager {
     }
 
     return total;
-}
+}*/
 }

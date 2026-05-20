@@ -8,20 +8,15 @@ package model;
  *
  * @author integ
  */
-public class LatePayment extends Payment{
-    private int delayDayCount;
+public class LatePayment extends Payment {
 
-    public LatePayment(int aptNo, double amount, int month, int year, int delayDayCount) {
-        super(aptNo, amount, month, year);
-        this.delayDayCount= delayDayCount;
+    public LatePayment(int paymentId, int tenantId,double amount, String paymentDate,String paymentType, int lateDays) {
+        super(paymentId, tenantId, amount, paymentDate, paymentType, lateDays);
     }
-    
-    //constructor
-    
+
     @Override
-    public double calculateAmount(){
-        //gecikme zamı uygulaması
-        return amount+(amount*0.02*delayDayCount);
+    public double calculateAmount() {
+        return getAmount() +
+               (getAmount() * 0.02 * getLateDays());
     }
-    
 }

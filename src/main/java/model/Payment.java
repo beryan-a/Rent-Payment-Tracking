@@ -9,34 +9,63 @@ package model;
  * @author integ
  */
 public class Payment {
-    protected  int aptNo;
-    protected double amount;
-    protected int month, year;
-    
-    //constructor
-    public Payment(int aptNo, double amount, int month, int year) {
-        this.aptNo = aptNo;
+
+    private int paymentId;
+    private int tenantId;
+    private double amount;
+    private String paymentDate;
+    private String paymentType;
+    private int lateDays;
+
+    // constructor
+    public Payment(int paymentId, int tenantId,
+                   double amount, String paymentDate,
+                   String paymentType, int lateDays) {
+
+        this.paymentId = paymentId;
+        this.tenantId = tenantId;
         this.amount = amount;
-        this.month=month;
-        this.year=year;
+        this.paymentDate = paymentDate;
+        this.paymentType = paymentType;
+        this.lateDays = lateDays;
     }
-    
-    //getters
-    public int getAptNo() {
-        return aptNo;
+
+    // getters
+    public int getPaymentId() {
+        return paymentId;
+    }
+
+    public int getTenantId() {
+        return tenantId;
     }
 
     public double getAmount() {
         return amount;
     }
-    public int getMonth(){
-        return month;
+
+    public String getPaymentDate() {
+        return paymentDate;
     }
-    public int getYear(){
-        return year;
+
+    public String getPaymentType() {
+        return paymentType;
+    }
+
+    public int getLateDays() {
+        return lateDays;
+    }
+
+    // setters
+    public void setAmount(double amount) {
+        this.amount = amount;
+    }
+
+    public void setPaymentType(String paymentType) {
+        this.paymentType = paymentType;
     }
     
-    public double calculateAmount(){
-        return amount;
+    // polymorphism method
+    public double calculateAmount() {
+        return getAmount();
     }
 }

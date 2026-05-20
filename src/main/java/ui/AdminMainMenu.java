@@ -9,11 +9,12 @@ package ui;
  * @author integ
  */
 import manager.ApartmentManager;
-import model.Tenant;
+import model.*;
 
-public class MainMenu extends javax.swing.JFrame {
+
+public class AdminMainMenu extends javax.swing.JFrame {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MainMenu.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(AdminMainMenu.class.getName());
 
     /**
      * Creates new form MainMenu
@@ -21,11 +22,17 @@ public class MainMenu extends javax.swing.JFrame {
     
     private ApartmentManager manager;
     
-    
-    public MainMenu() {
+    private static User currentUser; // hesabu açan user 
+    int currentadminid; //current admin id(hesabı açan admini tutar kontroller açısından)
+    public AdminMainMenu(User user) {
         initComponents();
+        
+        this.currentUser = user;
+        currentadminid = user.getId();
         setTitle("Rent Payment Tracking");
-        manager = new ApartmentManager();
+        
+        
+        /*manager = new ApartmentManager();
         
         //Data for testing
         Tenant t1 = new Tenant("ahmet ak", 5, 60000);
@@ -39,7 +46,7 @@ public class MainMenu extends javax.swing.JFrame {
         
         //set username and password
         txtUsername.setText("bryn_a");
-        txtPassword.setText("pass123");
+        txtPassword.setText("pass123");*/
         
     }
 
@@ -61,6 +68,7 @@ public class MainMenu extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         txtUsername = new javax.swing.JLabel();
         txtPassword = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -99,23 +107,17 @@ public class MainMenu extends javax.swing.JFrame {
 
         jLabel3.setText("Password:");
 
+        jButton1.setText("Apartment Management");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(277, 277, 277)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(rprtBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(tenantManBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(payManBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 193, Short.MAX_VALUE))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(169, 169, 169)
-                        .addComponent(jLabel1)))
-                .addContainerGap(211, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -128,19 +130,35 @@ public class MainMenu extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(logOutBtn)
                 .addGap(20, 20, 20))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(171, 171, 171)
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(277, 277, 277)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(rprtBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 193, Short.MAX_VALUE)
+                                .addComponent(payManBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 193, Short.MAX_VALUE))
+                            .addComponent(tenantManBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(209, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(53, 53, 53)
+                .addGap(21, 21, 21)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(tenantManBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(34, 34, 34)
+                .addGap(15, 15, 15)
+                .addComponent(tenantManBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(payManBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(37, 37, 37)
+                .addGap(18, 18, 18)
                 .addComponent(rprtBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(logOutBtn)
                     .addComponent(jLabel2)
@@ -157,22 +175,22 @@ public class MainMenu extends javax.swing.JFrame {
 
     private void tenantManBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tenantManBtnActionPerformed
         // TODO add your handling code here:
-        new TenantScreen(manager, this).setVisible(true);
-        //this.dispose();// ekran silinir 
-        this.setVisible(false); //silinmez sadece gizlenir
+        new TenantManagement_adminFrame(this, currentUser).setVisible(true);
+        this.dispose();// ekran silinir 
+        //this.setVisible(false); //silinmez sadece gizlenir
     }//GEN-LAST:event_tenantManBtnActionPerformed
 
     private void payManBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_payManBtnActionPerformed
         // TODO add your handling code here:
-        new PaymentScreen(manager, this).setVisible(true);
-        this.setVisible(false);
+        new PaymentManagement_adminFrame(this).setVisible(true);
+        this.dispose();
+        //this.setVisible(false);
     }//GEN-LAST:event_payManBtnActionPerformed
 
     private void rprtBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rprtBtnActionPerformed
         // TODO add your handling code here:
-        new ReportScreen(manager, this).setVisible(true);
-        this.setVisible(false);
-        
+        new ReportManagement_adminFrame(this, currentUser).setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_rprtBtnActionPerformed
 
     private void logOutBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logOutBtnActionPerformed
@@ -180,6 +198,12 @@ public class MainMenu extends javax.swing.JFrame {
         new logInScreen().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_logOutBtnActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        new ApartmentManagement_adminFrame(this, currentUser).setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -203,10 +227,11 @@ public class MainMenu extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new MainMenu().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new AdminMainMenu(currentUser).setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
