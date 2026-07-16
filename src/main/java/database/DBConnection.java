@@ -15,11 +15,11 @@ import java.sql.SQLException;
 
 public class DBConnection {
     private static final String URL =
-            "jdbc:mysql://localhost:3306/rent_payment_tracking_db";
+            "URL";
 
-    private static final String USER = "root";
+    private static final String USER = "USER";
 
-    private static final String PASSWORD = "Beryan2006";
+    private static final String PASSWORD = "PASSWORD";
 
     public static Connection getConnection() {
 
